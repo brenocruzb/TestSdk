@@ -1,1 +1,1 @@
-include ':app', ':paggcertosdk'
+include ':app', ':pagcertosdk'
