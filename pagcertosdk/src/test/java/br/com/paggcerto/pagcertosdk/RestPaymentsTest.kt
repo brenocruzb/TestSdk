@@ -1,6 +1,5 @@
 package br.com.paggcerto.pagcertosdk
 
-import br.com.pagcertopinpad.model.payment.Bin
 import br.com.paggcerto.pagcertosdk.model.payments.request.*
 import br.com.paggcerto.pagcertosdk.model.payments.response.*
 import br.com.paggcerto.pagcertosdk.rest.payment.PaymentNetwork

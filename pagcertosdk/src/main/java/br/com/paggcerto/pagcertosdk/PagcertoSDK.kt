@@ -2,18 +2,18 @@ package br.com.paggcerto.pagcertosdk
 
 import android.content.Context
 import androidx.room.Room
-import br.com.pagcertopinpad.model.payment.Bin
-import br.com.pagcertopinpad.service.PinpadService
 import br.com.paggcerto.pagcertosdk.model.account.response.Token
 import br.com.paggcerto.pagcertosdk.model.dao.database.AppDatabase
-
+import br.com.paggcerto.pagcertosdk.model.payments.response.Bin
 import br.com.paggcerto.pagcertosdk.rest.payment.PaymentNetwork
+import br.com.paggcerto.pagcertosdk.service.PinpadService
 import br.com.paggcerto.pagcertosdk.util.Util
 
 object PagcertoSDK{
 
     var token: Token? = null
-    lateinit var pinpadService : PinpadService
+    val pinpadService = PinpadService()
+    val listBins = ArrayList<Bin>()
 
     var environment: Environment? = null
     set(value) {
@@ -50,14 +50,15 @@ object PagcertoSDK{
                             emvSupported = item.emvSupported,
                             maximumInstallment = item.maximumInstallment.toInt()))
                     }
-
-                    pinpadService = PinpadService(obj)
+                    listBins.clear()
+                    listBins.addAll(obj)
                     db.close()
 
                     pagcertoSDKResponse.onResult(true, "PagcertoSDK ativa.")
                 }
 
                 override fun onError(code: Int, message: String) {
+                    token = null
                     pagcertoSDKResponse.onResult(false, message)
                 }
             })
@@ -69,13 +70,13 @@ object PagcertoSDK{
                 emvSupported = item.emvSupported,
                 maximumInstallment = item.maximumInstallment
             ) }
-
-            pinpadService = PinpadService(bins)
+            listBins.clear()
+            listBins.addAll(bins)
             db.close()
-
-            pagcertoSDKResponse.onResult(true, "PagcertoSDK ativa.")
         }
     }
 
-    fun isActive(): Boolean = ::pinpadService.isInitialized && pinpadService.listBins.isNotEmpty()
+    fun isActive(): Boolean{
+        return listBins.size > 0
+    }
 }

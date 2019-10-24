@@ -15,8 +15,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class BinsList (
+data class Bin (
 
-    @SerializedName("bins") val bins : List<Bin>,
-    @SerializedName("count") val count : Int
+	@SerializedName("cardBrand") val cardBrand : String,
+	@SerializedName("regex") val regex : String,
+	@SerializedName("debit") val debit : Boolean,
+	@SerializedName("emvSupported") val emvSupported : Boolean,
+	@SerializedName("maximumInstallment") val maximumInstallment : Number
 ): Serializable
