@@ -1,5 +1,6 @@
 package br.com.paggcerto.pagcertosdk.model.payments.response
 
+import br.com.pagcertopinpad.model.payment.Bin
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

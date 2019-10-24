@@ -1,5 +1,6 @@
 package br.com.paggcerto.pagcertosdk.rest.payment
 
+import br.com.pagcertopinpad.model.payment.Bin
 import br.com.paggcerto.pagcertosdk.PagcertoCallBack
 import br.com.paggcerto.pagcertosdk.PagcertoSDK
 import br.com.paggcerto.pagcertosdk.model.payments.request.*
@@ -37,12 +38,9 @@ class PaymentNetwork  {
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 when {
-                    response.code() == 200 -> try{
+                    response.code() == 200 -> {
                         val binList = gson.fromJson(response.body(), BinsList::class.java)
                         callBack.onSuccess(binList.bins)
-                    }catch (e: Exception){
-                        e.printStackTrace()
-                        callBack.onError(-1, "Erro ao processar bandeiras")
                     }
                     response.code() == 401 -> callBack.onError(response.code(), error401)
                     response.code() == 403 -> callBack.onError(response.code(), error403)
